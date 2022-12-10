@@ -1,6 +1,6 @@
 <?php
 
-namespace ;
+namespace FintechSystems\Payfast;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
