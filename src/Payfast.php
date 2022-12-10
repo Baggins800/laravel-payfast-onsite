@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use PayFast\PayFastApi;
 use PayFast\PayFastPayment;
-use PayFast\Plan;
+use Plan;
 
 class Payfast implements PaymentGateway
 {
