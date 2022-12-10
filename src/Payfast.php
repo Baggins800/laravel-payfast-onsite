@@ -106,7 +106,7 @@ class Payfast implements PaymentGateway
      */
     public function createOnsitePayment(Plan $plan, $billingDate = null, $mergeFields = [], $cycles = 0)
     {
-        $recurringType = Subscription::frequencies($planId);
+        $recurringType = Subscription::frequencies($plan->payfast_frequency);
 
         ray("billingDate in createOnsitePayment: " . $billingDate);
 
