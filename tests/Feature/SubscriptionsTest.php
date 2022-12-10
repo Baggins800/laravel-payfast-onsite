@@ -188,7 +188,7 @@ class SubscriptionsTest extends FeatureTestCase
 
         $subscription = $billable->subscriptions()->create([
             'name' => 'main',
-            'payfast_token' => 244,
+            'payfast_token' => "a3b3ae55-ab8b-b388-df23-4e6882b86ce0",
             'plan_id' => 2323,
             'payfast_status' => Subscription::STATUS_ACTIVE,
         ]);
@@ -207,8 +207,9 @@ class SubscriptionsTest extends FeatureTestCase
                             'frequency' => 3,
                             'run_date' => "2022-06-29T00:00:00+02:00",
                             'status' => 1,
-                            'status_reason' => "ACTIVE",
-                            'token' => 244,
+                            'status_reason' => "",
+                            'status_text' => "ACTIVE",
+                            'token' => "a3b3ae55-ab8b-b388-df23-4e6882b86ce0",
                         ],
                     ],
                 ]
@@ -219,7 +220,7 @@ class SubscriptionsTest extends FeatureTestCase
 
         ray($result);
     
-        $this->assertSame('244', $subscription->payfast_token);
+        $this->assertSame('a3b3ae55-ab8b-b388-df23-4e6882b86ce0', $subscription->payfast_token);
 
         // $this->assertSame('john@example.com', $subscription->paddleEmail());
         // $this->assertSame('card', $subscription->paymentMethod());
