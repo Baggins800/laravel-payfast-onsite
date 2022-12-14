@@ -28,14 +28,14 @@ class Payfast implements PaymentGateway
 
     public function __construct($client)
     {
-        // $this->payment = new PayFastPayment(
-        //     [
-        //         'merchantId' => $client['merchant_id'],
-        //         'merchantKey' => $client['merchant_key'],
-        //         'passPhrase' => $client['passphrase'],
-        //         'testMode' => $client['testmode'],
-        //     ]
-        // );
+        $this->payment = new PayFastPayment(
+            [
+                'merchantId' => $client['merchant_id'],
+                'merchantKey' => $client['merchant_key'],
+                'passPhrase' => '',
+                'testMode' => $client['testmode'],
+            ]
+        );
 
         $this->api = new PayFastApi(
             [
@@ -70,22 +70,22 @@ class Payfast implements PaymentGateway
     /**
      * Create a new subscription
      */
-    public function createSubscription($frequency, $recurringAmount, $initialAmount = 0, $billingDate = null, $cycles = 0)
+    public function createSubscription(Plan $plan, $billingDate = null, $cycles = 0)
     {
         $data = [
             'subscription_type' => 1,
             'm_payment_id' => Order::generate(),
-            'amount' => $initialAmount,
-            'recurring_amount' => $recurringAmount,
+            'amount' => $plan->initial_amount,
+            'recurring_amount' => $plan->recurring_amount,
             'billing_date' => $billingDate ?? Carbon::now()->format('Y-m-d'),
-            'frequency' => $frequency,
+            'frequency' => $plan->payfast_frequency,
             'cycles' => $cycles,
             'custom_str1' => Auth::user()->getMorphClass(),
             'custom_int1' => Auth::user()->getKey(),
-            'custom_int2' => $frequency,
-            'custom_str2' => config('payfast.plans')[$frequency]['name'],
+            'custom_int2' => $plan->payfast_frequency,
+            'custom_str2' => $plan->name,
 
-            'item_name' => config('app.name') . ' ' . Subscription::frequencies($frequency) . ' Subscription',
+            'item_name' => config('app.name') . "$plan->name Subscription",
 
             'email_address' => Auth::user()->email,
         ];
