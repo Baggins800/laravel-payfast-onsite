@@ -32,7 +32,7 @@ class Payfast implements PaymentGateway
             [
                 'merchantId' => $client['merchant_id'],
                 'merchantKey' => $client['merchant_key'],
-                'passPhrase' => '',
+                'passPhrase' => $client['passphrase'],
                 'testMode' => $client['testmode'],
             ]
         );
