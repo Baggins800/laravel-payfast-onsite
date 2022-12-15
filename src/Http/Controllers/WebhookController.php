@@ -208,8 +208,10 @@ class WebhookController extends Controller
         ray($result);
 
         $subscription = Subscription::whereToken($payload['token'])->first();
+        if ($subscription) {
+          $subscription->updatePayfastSubscription($result);
+        }
 
-        $subscription->updatePayFastSubscription($result);
 
         $message = "Fetched and updated API status for token " . $payload['token'] . ".";
         Log::notice($message);

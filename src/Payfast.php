@@ -82,7 +82,7 @@ class Payfast implements PaymentGateway
             'cycles' => $cycles,
             'custom_str1' => Auth::user()->getMorphClass(),
             'custom_int1' => Auth::user()->getKey(),
-            'custom_int2' => $plan->payfast_frequency,
+            'custom_int2' => $plan->id,
             'custom_str2' => $plan->name,
 
             'item_name' => config('app.name') . "$plan->name Subscription",
