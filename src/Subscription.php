@@ -22,6 +22,7 @@ class Subscription extends Model
     public const STATUS_PAST_DUE = 'past_due';
     public const STATUS_PAUSED = 'paused';
     public const STATUS_DELETED = 'CANCELLED';
+    public const STATUS_COMPLETE = 'COMPLETE';
     
     /**
      * The attributes that are not mass assignable.

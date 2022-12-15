@@ -65,7 +65,7 @@ class WebhookController extends Controller
                 return new Response('Webhook cancelSubscription handled');
             }
 
-            if ($payload['payment_status'] == Subscription::PAYMENT_STATUS_COMPLETE) {
+            if ($payload['payment_status'] == Subscription::STATUS_COMPLETE) {
                 $this->applySubscriptionPayment($payload);
                 WebhookHandled::dispatch($payload);
 
@@ -130,12 +130,10 @@ class WebhookController extends Controller
         $customer = $this->findOrCreateCustomer($payload);
 
         $subscription = $customer->subscriptions()->create([
-            'token' => $payload['token'],
+            'payfast_token' => $payload['token'],
             'plan_id' => $payload['custom_int2'],
             'name' => 'default', // See Laravel Cashier Stripe and Paddle docs - "internal name of the subscription"
-            'merchant_payment_id' => $payload['m_payment_id'],
-            'payment_status' => $payload['payment_status'],
-            'status' => Subscription::STATUS_ACTIVE,
+            'payfast_status' => $payload['payment_status'],
             'next_bill_at' => $payload['billing_date'],
         ]);
 
