@@ -12,9 +12,6 @@ use FintechSystems\Payfast\Plan;
 
 class Payfast implements PaymentGateway
 {
-    public const COMPLETED_PAYMENT_STATUS = 'COMPLETE';
-    public const CANCELLED_PAYMENT_STATUS = 'CANCELLED';
-
     private $payment;
 
     private $returnUrl;
@@ -65,6 +62,11 @@ class Payfast implements PaymentGateway
         $cancelArray = $this->api->subscriptions->cancel($token);
 
         ray($cancelArray);
+    }
+
+    public function isValidNotification(array $data)
+    {
+        return $this->payment->notification->isValidNotification($data);
     }
 
     /**

@@ -23,6 +23,42 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WebhookController extends Controller
 {
+
+    public function validServerConfirmation( $pfParamString, $pfHost = 'sandbox.payfast.co.za', $pfProxy = null )
+    {
+        // Use cURL (if available)
+        if( in_array( 'curl', get_loaded_extensions(), true ) ) {
+            // Variable initialization
+            $url = 'https://'. $pfHost .'/eng/query/validate';
+    
+            // Create default cURL object
+            $ch = curl_init();
+        
+            // Set cURL options - Use curl_setopt for greater PHP compatibility
+            // Base settings
+            curl_setopt( $ch, CURLOPT_USERAGENT, NULL );  // Set user agent
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );      // Return output as string rather than outputting it
+            curl_setopt( $ch, CURLOPT_HEADER, false );             // Don't include header in output
+            curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 2 );
+            curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, true );
+            
+            // Standard settings
+            curl_setopt( $ch, CURLOPT_URL, $url );
+            curl_setopt( $ch, CURLOPT_POST, true );
+            curl_setopt( $ch, CURLOPT_POSTFIELDS, $pfParamString );
+            if( !empty( $pfProxy ) )
+                curl_setopt( $ch, CURLOPT_PROXY, $pfProxy );
+        
+            // Execute cURL
+            $response = curl_exec( $ch );
+            curl_close( $ch );
+            if ($response === 'VALID') {
+                return true;
+            }
+        }
+        return false;
+    } 
+
     /**
      * Handle a Payfast webhook call.
      *
@@ -31,6 +67,9 @@ class WebhookController extends Controller
      */
     public function __invoke(Request $request)
     {
+        header( 'HTTP/1.0 200 OK' );
+        flush();
+
         Log::info("Incoming Webhook from Payfast...");
 
         ray('Incoming Webhook from Payfast')->purple();
@@ -41,28 +80,34 @@ class WebhookController extends Controller
 
         Log::debug($payload);
 
-        WebhookReceived::dispatch($payload);
+        $this->validServerConfirmation($request->all());
+        if (! Payfast::isValidNotification($payload)) {
+            return new Response('Invalid Data', 500);
+        }
 
+        WebhookReceived::dispatch($payload);
+        return response($payload, 200);
+        
         try {
             if (! isset($payload['token'])) {
                 $this->nonSubscriptionPaymentReceived($payload);
                 WebhookHandled::dispatch($payload);
 
-                return new Response('Webhook nonSubscriptionPaymentReceived handled');
+                return new Response('Webhook nonSubscriptionPaymentReceived handled', 200);
             }
 
             if (! $this->findSubscription($payload['token'])) {
                 $this->createSubscription($payload);
                 WebhookHandled::dispatch($payload);
 
-                return new Response('Webhook createSubscription/applySubscriptionPayment handled');
+                return new Response('Webhook createSubscription/applySubscriptionPayment handled', 200);
             }
 
             if ($payload['payment_status'] == Subscription::STATUS_DELETED) {
                 $this->cancelSubscription($payload);
                 WebhookHandled::dispatch($payload);
 
-                return new Response('Webhook cancelSubscription handled');
+                return new Response('Webhook cancelSubscription handled', 200);
             }
 
             if ($payload['payment_status'] == Subscription::STATUS_COMPLETE) {
