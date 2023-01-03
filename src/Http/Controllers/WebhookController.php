@@ -84,9 +84,6 @@ class WebhookController extends Controller
         if (! Payfast::isValidNotification($payload)) {
             return new Response('Invalid Data', 500);
         }
-
-        WebhookReceived::dispatch($payload);
-        return response($payload, 200);
         
         try {
             if (! isset($payload['token'])) {
