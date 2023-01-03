@@ -148,7 +148,7 @@ class WebhookController extends Controller
             'amount_fee' => $payload['amount_fee'],
             'amount_net' => $payload['amount_net'],
             'billable_id' => $payload['custom_int1'],
-            'billable_type' => $payload['custom_str1'],
+            'billable_type' => base64_decode($payload['custom_str1']),
             'paid_at' => now(),
         ]);
 
@@ -224,7 +224,7 @@ class WebhookController extends Controller
             'amount_fee' => $payload['amount_fee'],
             'amount_net' => $payload['amount_net'],
             'billable_id' => $payload['custom_int1'],
-            'billable_type' => $payload['custom_str1'],
+            'billable_type' => base64_decode($payload['custom_str1']),
             'paid_at' => now(),
         ]);
 
@@ -339,12 +339,12 @@ class WebhookController extends Controller
     private function findOrCreateCustomer(array $passthrough)
     {
         if (! isset($passthrough['custom_str1'], $passthrough['custom_int1'])) {
-            throw new InvalidMorphModelInPayload($passthrough['custom_str1'] . "|" . $passthrough['custom_int1']);
+            throw new InvalidMorphModelInPayload(base64_decode($passthrough['custom_str1']) . "|" . $passthrough['custom_int1']);
         }
 
         return Cashier::$customerModel::firstOrCreate([
             'billable_id' => $passthrough['custom_int1'],
-            'billable_type' => $passthrough['custom_str1'],
+            'billable_type' => base64_decode($passthrough['custom_str1']),
         ])->billable;
     }
 }
