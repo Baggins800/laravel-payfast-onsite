@@ -82,14 +82,16 @@ class Payfast implements PaymentGateway
             'billing_date' => $billingDate ?? Carbon::now()->format('Y-m-d'),
             'frequency' => $plan->payfast_frequency,
             'cycles' => $cycles,
-            'custom_str1' => Auth::user()->getMorphClass(),
+            'custom_str1' => rtrim(base64_encode(Auth::user()->getMorphClass()), '='),
             'custom_int1' => Auth::user()->getKey(),
             'custom_int2' => $plan->id,
-            'custom_str2' => $plan->name,
+            'custom_str2' => rtrim(base64_encode($plan->name), '='),
 
             'item_name' => config('app.name') . "$plan->name Subscription",
 
             'email_address' => Auth::user()->email,
+            'confirmation_address' => Auth::user()->email,
+	    'email_confirmation' => 1
         ];
 
         return $this->payment->custom->createFormFields(
@@ -120,12 +122,14 @@ class Payfast implements PaymentGateway
             'billing_date' => $billingDate,
             'frequency' => $plan->payfast_frequency,
             'cycles' => $cycles,
-            'custom_str1' => Auth::user()->getMorphClass(),
+            'custom_str1' => rtrim(base64_encode(Auth::user()->getMorphClass()), '='),
             'custom_int1' => Auth::user()->getKey(),
             'custom_int2' => $plan->id,
-            'custom_str2' => $plan->name,
+            'custom_str2' => rtrim(base64_encode($plan->name), '='),
             'item_name' => config('app.name') . " $recurringType Subscription",            
             'email_address' => Auth::user()->email,
+            'confirmation_address' => Auth::user()->email,
+	    'email_confirmation' => 1
         ];
 
         $data = array_merge($data, $this->urlCollection);

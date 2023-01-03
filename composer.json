@@ -22,6 +22,13 @@
             "FintechSystems\\Payfast\\": "src/"            
         }
     },
+    "repositories": [
+      {
+        "url": "https://github.com/Baggins800/payfast-php-sdk",
+        "type": "git"
+      }
+    ],
+
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
@@ -32,7 +39,7 @@
         "php": "^8.0",
         "symfony/dotenv": "^5.3",
         "illuminate/contracts": "^8.37 | ^9.21",
-        "payfast/payfast-php-sdk": "^1.1",
+        "payfast/payfast-php-sdk": "master-dev",
         "spatie/ray": "^1.32",
         "livewire/livewire": "^2.8",
         "moneyphp/money": "^4.0"
