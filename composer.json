@@ -24,8 +24,11 @@
     },
     "repositories": [
       {
+	"type": "package",
+	"name": "payfast/payfast-php-sdk",
         "url": "https://github.com/Baggins800/payfast-php-sdk",
-        "type": "git"
+        "type": "git",
+	"reference": "master"
       }
     ],
 
