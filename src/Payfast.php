@@ -6,9 +6,11 @@ use Carbon\Carbon;
 use FintechSystems\Payfast\Contracts\PaymentGateway;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use PayFast\PayFastApi;
 use PayFast\PayFastPayment;
 use FintechSystems\Payfast\Plan;
+use FintechSystems\Payfast\Subscription;
 
 class Payfast implements PaymentGateway
 {
@@ -57,11 +59,24 @@ class Payfast implements PaymentGateway
         $this->cardUpdatedReturnUrl = $client['card_updated_return_url'];
     }
 
-    public function cancelSubscription($token)
+    public function cancelSubscription(Subscription $subscription)
     {
-        $cancelArray = $this->api->subscriptions->cancel($token);
+        $cancelArray = $this->api->subscriptions->cancel($subscription->payfast_token);
+        $valid = !Validator::make($cancelArray, [
+          'data' => 'array:response,message',
+          'status' => 'string',
+          'code' => 'numeric'
+        ])->fails();
+
+        if ($valid && $cancelArray['data']['response']) {
+          $subscription->cancelled_at = now();
+          $subscription->payfast_status = "CANCELLED";
+          $subscription->ends_at = $subscription->next_bill_at;
+          $subscription->save();
+        }
 
         ray($cancelArray);
+        return $subscription;
     }
 
     public function isValidNotification(array $data)
