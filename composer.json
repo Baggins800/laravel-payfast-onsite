@@ -33,7 +33,7 @@
     "require": {
         "php": "^8.0|^8.2",
         "symfony/dotenv": "^5.3",
-        "illuminate/contracts": "^8.37 | ^9.21 | 10.0^",
+        "illuminate/contracts": "^8.37 | ^9.21 | ^10.0",
         "payfast/payfast-php-sdk": "dev-master",
         "spatie/ray": "^1.32",
         "livewire/livewire": "^2.8",
