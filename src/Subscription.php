@@ -19,7 +19,7 @@ class Subscription extends Model
     use Prorates;
     public function getTable()
     {
-        return Config::get('payfast.tables.plans');
+        return Config::get('payfast.tables.subscriptions');
     }
     public const STATUS_ACTIVE = 'active';
     public const STATUS_TRIALING = 'trialing';
