@@ -7,6 +7,7 @@ use Money\Currency;
 
 class Receipt extends Model
 {
+    protected $table = config('payfast.tables.receipts');
     /**
      * The attributes that are not mass assignable.
      *

@@ -13,7 +13,7 @@ class CreatePayfastCustomerColumns extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table(config('payfast.tables.users'), function (Blueprint $table) {
             $table->string('credit_card_token')->nullable()->index();
             $table->timestamp('trial_ends_at')->nullable();
         });
@@ -26,7 +26,7 @@ class CreatePayfastCustomerColumns extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table(config('payfast.tables.users'), function (Blueprint $table) {
             $table->dropColumn([
                 'credit_card_token',
                 'trial_ends_at',

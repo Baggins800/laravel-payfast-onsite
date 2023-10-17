@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
+    protected $table = config('payfast.tables.orders');
     /**
      * The attributes that are not mass assignable.
      *

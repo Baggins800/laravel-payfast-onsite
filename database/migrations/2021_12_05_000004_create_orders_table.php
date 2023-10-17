@@ -13,7 +13,7 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create(config('payfast.tables.orders'), function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('billable_id');
             $table->string('billable_type');
@@ -31,6 +31,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists(config('payfast.tables.orders'));
     }
 }

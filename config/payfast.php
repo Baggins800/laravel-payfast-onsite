@@ -15,4 +15,12 @@ return [
         'Lacks features',
         'Not what I expected',
     ],
+    'tables' => [
+        'customers' => 'customers',
+        'users' => 'users',
+        'orders' => 'orders',
+        'plans' => 'plans',
+        'receipts' => 'receipts',
+        'subscriptions' => 'subscriptions'
+     ]
 ];

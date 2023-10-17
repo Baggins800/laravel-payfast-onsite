@@ -16,7 +16,7 @@ use LogicException;
 class Subscription extends Model
 {
     use Prorates;
-
+    protected $table = config('payfast.tables.subscriptions');
     public const STATUS_ACTIVE = 'active';
     public const STATUS_TRIALING = 'trialing';
     public const STATUS_PAST_DUE = 'past_due';

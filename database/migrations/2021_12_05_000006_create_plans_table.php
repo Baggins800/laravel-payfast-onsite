@@ -13,7 +13,7 @@ class CreatePlansTable extends Migration
      */
     public function up()
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create(config('payfast.tables.plans'), function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->unsignedInteger('payfast_frequency');
@@ -31,6 +31,6 @@ class CreatePlansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists(config('payfast.tables.plans'));
     }
 }

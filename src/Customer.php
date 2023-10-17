@@ -44,4 +44,5 @@ class Customer extends Model
     {
         return $this->trial_ends_at && $this->trial_ends_at->isFuture();
     }
+    protected $table = config('payfast.tables.customers');
 }

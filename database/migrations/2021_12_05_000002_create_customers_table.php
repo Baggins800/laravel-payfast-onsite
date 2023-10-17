@@ -13,7 +13,7 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create(config('payfast.tables.customers'), function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('billable_id');
             $table->string('billable_type');
@@ -31,6 +31,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists(config('payfast.tables.customers'));
     }
 }

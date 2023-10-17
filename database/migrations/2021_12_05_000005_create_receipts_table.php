@@ -13,7 +13,7 @@ class CreateReceiptsTable extends Migration
      */
     public function up()
     {
-        Schema::create('receipts', function (Blueprint $table) {
+        Schema::create(config('payfast.tables.receipts'), function (Blueprint $table) {
             $table->id();
             $table->string('merchant_payment_id')->nullable();
             $table->string('payfast_payment_id')->unique();
@@ -42,6 +42,6 @@ class CreateReceiptsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('receipts');
+        Schema::dropIfExists(config('payfast.tables.receipts'));
     }
 }
