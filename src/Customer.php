@@ -2,13 +2,18 @@
 
 namespace FintechSystems\Payfast;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property \FintechSystems\Payfast\Billable $billable
  */
 class Customer extends Model
-{
+{    
+    public function getTable() {
+        return Config::get('payfast.tables.customers');
+    }
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -44,5 +49,4 @@ class Customer extends Model
     {
         return $this->trial_ends_at && $this->trial_ends_at->isFuture();
     }
-    protected $table = config('payfast.tables.customers');
 }

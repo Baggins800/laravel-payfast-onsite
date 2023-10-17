@@ -3,11 +3,16 @@
 namespace FintechSystems\Payfast;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 use Money\Currency;
+
 
 class Receipt extends Model
 {
-    protected $table = config('payfast.tables.receipts');
+    public function getTable() {
+      return Config::get('payfast.tables.receipts');
+    }
+
     /**
      * The attributes that are not mass assignable.
      *

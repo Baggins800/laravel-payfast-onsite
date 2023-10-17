@@ -7,6 +7,7 @@ use DateTimeInterface;
 use Exception;
 use FintechSystems\Payfast\Concerns\Prorates;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use LogicException;
 
@@ -16,7 +17,10 @@ use LogicException;
 class Subscription extends Model
 {
     use Prorates;
-    protected $table = config('payfast.tables.subscriptions');
+    public function getTable()
+    {
+        return Config::get('payfast.tables.plans');
+    }
     public const STATUS_ACTIVE = 'active';
     public const STATUS_TRIALING = 'trialing';
     public const STATUS_PAST_DUE = 'past_due';

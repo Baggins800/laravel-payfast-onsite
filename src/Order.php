@@ -5,10 +5,14 @@ namespace FintechSystems\Payfast;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class Order extends Model
 {
-    protected $table = config('payfast.tables.orders');
+    public function getTable() {
+      return Config::get('payfast.tables.orders');
+    }
+
     /**
      * The attributes that are not mass assignable.
      *
