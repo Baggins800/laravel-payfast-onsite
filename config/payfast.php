@@ -22,5 +22,6 @@ return [
         'plans' => 'plans',
         'receipts' => 'receipts',
         'subscriptions' => 'subscriptions'
-     ]
+     ],
+     'webhook' => '/payfast/webhook'
 ];
