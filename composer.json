@@ -34,7 +34,7 @@
         "php": "^8.0|^8.2",
         "symfony/dotenv": "^5.3",
         "illuminate/contracts": "^8.37 | ^9.21 | ^10.0",
-        "payfast/payfast-php-sdk": "dev-master",
+        "payfast/payfast-php-sdk": "^1.1",
         "spatie/ray": "^1.32",
         "livewire/livewire": "^2.8",
         "moneyphp/money": "^4.0"
@@ -46,13 +46,6 @@
         "spatie/laravel-ray": "^1.23",
         "vimeo/psalm": "^4.8"        
     },
-    "repositories": [
-      {
-	"name": "payfast/payfast-php-sdk",
-        "url": "https://github.com/Baggins800/payfast-php-sdk",
-        "type": "git"
-      }
-    ],
     "extra": {
         "laravel": {
             "providers": [
