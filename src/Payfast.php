@@ -87,26 +87,24 @@ class Payfast implements PaymentGateway
     /**
      * Create a new subscription
      */
-    public function createSubscription(Plan $plan, $billingDate = null, $cycles = 0)
+    public function createSubscription(Plan $plan, $confirmationEmail=null, $cycles = 0)
     {
         $data = [
             'subscription_type' => 1,
             'm_payment_id' => Order::generate(),
             'amount' => $plan->initial_amount,
             'recurring_amount' => $plan->recurring_amount,
-            'billing_date' => $billingDate ?? Carbon::now()->format('Y-m-d'),
+            'billing_date' => $plan->billing_date ?? Carbon::now()->format('Y-m-d'),
             'frequency' => $plan->payfast_frequency,
             'cycles' => $cycles,
             'custom_str1' => rtrim(base64_encode(Auth::user()->getMorphClass()), '='),
             'custom_int1' => Auth::user()->getKey(),
             'custom_int2' => $plan->id,
             'custom_str2' => rtrim(base64_encode($plan->name), '='),
-
-            'item_name' => config('app.name') . "$plan->name Subscription",
-
+            'item_name' => config('app.name') . " $plan->name Subscription",
             'email_address' => Auth::user()->email,
-            'confirmation_address' => Auth::user()->email,
-	    'email_confirmation' => 1
+            'confirmation_address' => $confirmationEmail,
+	          'email_confirmation' => $confirmationEmail != null
         ];
 
         return $this->payment->custom->createFormFields(

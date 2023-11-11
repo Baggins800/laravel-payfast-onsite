@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Config;
 
 class Plan extends Model
 {
-    protected $fillable = ['name', 'recurring_amount', 'initial_amount', 'payfast_frequency'];
+    protected $fillable = ['name', 'recurring_amount', 'initial_amount', 'payfast_frequency', 'billing_date'];
 
     public function getTable()
     {
