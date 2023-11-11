@@ -94,7 +94,7 @@ class Payfast implements PaymentGateway
             'm_payment_id' => Order::generate(),
             'amount' => $plan->initial_amount,
             'recurring_amount' => $plan->recurring_amount,
-            'billing_date' => $plan->billing_date ?? Carbon::now()->format('Y-m-d'),
+            'billing_date' => $plan->billing_date ? Carbon::createFromFormat('Y-m-d H:i:s', $plan->billing_date)->format('Y-m-d') : Carbon::now()->format('Y-m-d'),
             'frequency' => $plan->payfast_frequency,
             'cycles' => $cycles,
             'custom_str1' => rtrim(base64_encode(Auth::user()->getMorphClass()), '='),
