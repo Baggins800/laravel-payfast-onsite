@@ -103,9 +103,13 @@ class Payfast implements PaymentGateway
             'custom_str2' => rtrim(base64_encode($plan->name), '='),
             'item_name' => config('app.name') . " $plan->name Subscription",
             'email_address' => Auth::user()->email,
-            'confirmation_address' => $confirmationEmail,
-	          'email_confirmation' => $confirmationEmail != null
+
         ];
+
+        if ($confirmationEmail) {
+            $data['confirmation_address'] = $confirmationEmail;
+            $date['email_confirmation'] = 1;
+        }
 
         return $this->payment->custom->createFormFields(
             array_merge($data, $this->urlCollection),
