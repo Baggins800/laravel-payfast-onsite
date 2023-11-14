@@ -561,7 +561,7 @@ class Subscription extends Model
             Log::debug($result);
         }
 
-        $subscription = Subscription::whereToken($result['data']['response']['token'])->firstOrFail();
+        $subscription = Subscription::wherePayfastToken($result['data']['response']['token'])->firstOrFail();
 
         $subscription->payfast_status = $result['data']['response']['status_text'];
 
