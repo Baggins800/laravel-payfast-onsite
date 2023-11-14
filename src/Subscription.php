@@ -27,7 +27,7 @@ class Subscription extends Model
     public const STATUS_PAUSED = 'paused';
     public const STATUS_DELETED = 'CANCELLED';
     public const STATUS_COMPLETE = 'COMPLETE';
-    
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -560,7 +560,6 @@ class Subscription extends Model
 
             Log::debug($result);
         }
-
         $subscription = Subscription::wherePayfastToken($result['data']['response']['token'])->firstOrFail();
 
         $subscription->payfast_status = $result['data']['response']['status_text'];

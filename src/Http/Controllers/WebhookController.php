@@ -30,10 +30,10 @@ class WebhookController extends Controller
         if( in_array( 'curl', get_loaded_extensions(), true ) ) {
             // Variable initialization
             $url = 'https://'. $pfHost .'/eng/query/validate';
-    
+
             // Create default cURL object
             $ch = curl_init();
-        
+
             // Set cURL options - Use curl_setopt for greater PHP compatibility
             // Base settings
             curl_setopt( $ch, CURLOPT_USERAGENT, NULL );  // Set user agent
@@ -41,14 +41,14 @@ class WebhookController extends Controller
             curl_setopt( $ch, CURLOPT_HEADER, false );             // Don't include header in output
             curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 2 );
             curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, true );
-            
+
             // Standard settings
             curl_setopt( $ch, CURLOPT_URL, $url );
             curl_setopt( $ch, CURLOPT_POST, true );
             curl_setopt( $ch, CURLOPT_POSTFIELDS, $pfParamString );
             if( !empty( $pfProxy ) )
                 curl_setopt( $ch, CURLOPT_PROXY, $pfProxy );
-        
+
             // Execute cURL
             $response = curl_exec( $ch );
             curl_close( $ch );
@@ -57,7 +57,7 @@ class WebhookController extends Controller
             }
         }
         return false;
-    } 
+    }
 
     /**
      * Handle a Payfast webhook call.
@@ -84,7 +84,7 @@ class WebhookController extends Controller
         if (! Payfast::isValidNotification($payload)) {
             return new Response('Invalid Data', 500);
         }
-        
+
         try {
             if (! isset($payload['token'])) {
                 $this->nonSubscriptionPaymentReceived($payload);
@@ -249,7 +249,7 @@ class WebhookController extends Controller
         Log::debug($result);
         ray($result);
 
-        $subscription = Subscription::whereToken($payload['token'])->first();
+        $subscription = Subscription::wherePayfastToken($payload['token'])->first();
         if ($subscription) {
           $subscription->updatePayfastSubscription($result);
         }
