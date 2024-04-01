@@ -27,10 +27,8 @@ class CreatePayfastCustomerColumns extends Migration
     public function down()
     {
         Schema::table(config('payfast.tables.users'), function (Blueprint $table) {
-            $table->dropColumn([
-                'credit_card_token',
-                'trial_ends_at',
-            ]);
+            $table->dropColumn('credit_card_token');
+            $table->dropColumn('trial_ends_at');
         });
     }
 }
