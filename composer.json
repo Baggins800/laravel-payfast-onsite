@@ -15,6 +15,11 @@
             "name": "Eugene van der Merwe",
             "email": "eugenevdm@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Ruan Luies",
+            "email": "ruan@bitsembler.com",
+            "role": "Developer"
         }
     ],
     "autoload": {
@@ -31,12 +36,11 @@
         }
     },    
     "require": {
-        "php": "^8.0|^8.2",
+        "php": "^8.0|^8.2|^8.3",
         "symfony/dotenv": "^5.3",
         "illuminate/contracts": "^8.37 | ^9.21 | ^10.0",
         "payfast/payfast-php-sdk": "dev-master",
         "spatie/ray": "^1.32",
-        "livewire/livewire": "^2.8",
         "moneyphp/money": "^4.0"
     },
     "require-dev": {  
