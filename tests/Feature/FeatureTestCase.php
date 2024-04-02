@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use FintechSystems\Payfast\PayfastServiceProvider;
 use FintechSystems\Payfast\Tests\Fixtures\User;
-use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase;
 
 abstract class FeatureTestCase extends TestCase
@@ -39,7 +38,6 @@ abstract class FeatureTestCase extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            LivewireServiceProvider::class,
             PayfastServiceProvider::class,
         ];
     }

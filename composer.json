@@ -1,11 +1,9 @@
 {
     "name": "fintech-systems/laravel-payfast-onsite",
-    "description": "A PayFast Onsite Payments integration for Laravel designed to ease subscription billing. Livewire views are included.",
+    "description": "A PayFast Onsite Payments integration for Laravel designed to ease subscription billing. ",
     "keywords": [        
         "Laravel",
         "PayFast",
-        "Laravel-Livewire",
-        "Laravel-Jetstream",
         "FintechSystems"
     ],
     "homepage": "https://github.com/fintech-systems/laravel-payfast-onsite",
