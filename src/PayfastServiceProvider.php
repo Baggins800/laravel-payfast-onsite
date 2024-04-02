@@ -2,14 +2,11 @@
 
 namespace FintechSystems\Payfast;
 
-use Livewire\Livewire;
 use PayFast\PayFastApi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use FintechSystems\Payfast\Components\JetstreamReceipts;
 use FintechSystems\Payfast\PayFastApi as FintechSystemsPayFastApi;
-use FintechSystems\Payfast\Components\JetstreamSubscriptions;
 
 class PayfastServiceProvider extends ServiceProvider
 {
@@ -30,10 +27,6 @@ class PayfastServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-
-        Livewire::component('jetstream-subscriptions', JetstreamSubscriptions::class);
-
-        Livewire::component('jetstream-receipts', JetstreamReceipts::class);
         
     }
 
