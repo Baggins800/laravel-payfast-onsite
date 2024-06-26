@@ -4,6 +4,7 @@ namespace FintechSystems\Payfast;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
@@ -25,7 +26,7 @@ class Order extends Model
         $newRecord = self::create([
             'billable_id' => Auth::user()->getKey(),
             'billable_type' => Auth::user()->getMorphClass(),
-            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'ip_address' => Request::ip()
         ]);
 
         return $newRecord->id . '-' . Carbon::now()->format('YmdHis');
